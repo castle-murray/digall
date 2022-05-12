@@ -2,7 +2,7 @@
 
 import sys
 import dns.resolver 
-
+## one change
 ## taking some inputs, first input after the commmand must be a reseller, second and third are dns record types. 
 
 if len(sys.argv) > 2:
