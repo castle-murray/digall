@@ -6,15 +6,15 @@ import dns.resolver
 ## taking some inputs, first input after the commmand must be a reseller, second and third are dns record types. 
 
 if len(sys.argv) > 2:
-	rec_type = str.upper(sys.argv[2])
-	if len(sys.argv) > 3:
-		rec_type2 = str.upper(sys.argv[3])
+    rec_type = str.upper(sys.argv[2])
+    if len(sys.argv) > 3:
+        rec_type2 = str.upper(sys.argv[3])
 owner = str(sys.argv[1])
 
 ## help instructions.
 if owner == "-h" or owner == "--help":
-	print(f"This command prints all domains in all cPanels under a reseller on a server.\n if you enter a record type after the reseller it will show you the DNS results for that record type too.\n\nThe first input after the digall command should be a cPanel reseller\nThe second and third inputs can be blank or dns record types\nexample: digall ownerw5 a txt")
-	sys.exit
+    print(f"This command prints all domains in all cPanels under a reseller on a server.\n if you enter a record type after the reseller it will show you the DNS results for that record type too.\n\nThe first input after the digall command should be a cPanel reseller\nThe second and third inputs can be blank or dns record types\nexample: digall ownerw5 a txt")
+    sys.exit
 
 
 ## setting up some lists.
@@ -26,9 +26,9 @@ owners_list = owners.read().splitlines()
 owner_match = []
 
 for split in owners_list:
-	split = split.split(": ")  ## you can split by a string. Placing the space after the colon means you don't end up with a space on the front of your owner name.
-	if owner in split[1]:
-		owner_match.append(split[0])
+    split = split.split(": ")  ## you can split by a string. Placing the space after the colon means you don't end up with a space on the front of your owner name.
+    if owner in split[1]:
+        owner_match.append(split[0])
 
 ## setting up domain list which has the cPanel user in the same format as the cPanel user: owner list above. 
 domains = open("/etc/userdomains", "r")
@@ -39,32 +39,32 @@ domain_match = []
 
 ## same as above, looking for users from owner_match list in the domain list, splitting those strings and adding the domains to domain_match. 
 for user in owner_match:
-	for domain in domain_list:
-		d_split  = domain.split(": ")
-		if user in d_split[1]:
-			domain_match.append(d_split[0])
+    for domain in domain_list:
+        d_split  = domain.split(": ")
+        if user in d_split[1]:
+            domain_match.append(d_split[0])
 
 ## this part resolves the dns records placed in the argument above. 
 
 if len(sys.argv) > 2: 
-	for domain in domain_match:
-		print(domain)
-		try:           ## important. without the error handling it will simply fail if there is no record in place. 
-			result = dns.resolver.query(domain, rec_type)
-			for answer in result:
-				print("\t", answer.to_text())
-		except:
-			pass
-			print("That's a nope on the ", rec_type, " record there, bud.")   ## hilarious.
-		if len(sys.argv) > 3:
-			try:
-				result2 = dns.resolver.query(domain, rec_type2)
-				for answer2 in result2:
-					print("\t" + answer2.to_text())
-			except:
-				pass
-				print("that's a nope on the " + rec_type2 + " record there, bud.")
+    for domain in domain_match:
+        print(domain)
+        try:           ## important. without the error handling it will simply fail if there is no record in place. 
+            result = dns.resolver.query(domain, rec_type)
+            for answer in result:
+                print("\t", answer.to_text())
+        except:
+            pass
+            print("That's a nope on the ", rec_type, " record there, bud.")   ## hilarious.
+        if len(sys.argv) > 3:
+            try:
+                result2 = dns.resolver.query(domain, rec_type2)
+                for answer2 in result2:
+                    print("\t" + answer2.to_text())
+            except:
+                pass
+                print("that's a nope on the " + rec_type2 + " record there, bud.")
 ## if no DNS arguments in place it just prints the domains.
 else:
-	for domain in domain_match:
-		print(domain) 
+    for domain in domain_match:
+        print(domain) 
