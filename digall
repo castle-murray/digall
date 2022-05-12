@@ -13,7 +13,7 @@ owner = str(sys.argv[1])
 
 ## help instructions.
 if owner == "-h" or owner == "--help":
-	print(f"This command prints all domains in all cPanels under a reseller on a server.\n\nThe first input after the digall command should be a cPanel reseller\nThe second and third inputs can be blank or dns record types\nexample: digall ownerw5 a txt")
+	print(f"This command prints all domains in all cPanels under a reseller on a server.\n if you enter a record type after the reseller it will show you the DNS results for that record type too.\n\nThe first input after the digall command should be a cPanel reseller\nThe second and third inputs can be blank or dns record types\nexample: digall ownerw5 a txt")
 	sys.exit
 
 
