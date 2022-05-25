@@ -48,22 +48,21 @@ for user in owner_match:
 
 if len(sys.argv) > 2: 
 	for domain in domain_match:
-		print(domain)
 		try:           ## important. without the error handling it will simply fail if there is no record in place. 
-			result = dns.resolver.query(domain, rec_type)
+			result = dns.resolver.resolve(domain, rec_type)
 			for answer in result:
-				print("\t", answer.to_text())
+				print(domain, "\t", answer.to_text())
 		except:
 			pass
-			print("That's a nope on the ", rec_type, " record there, bud.")   ## hilarious.
+			print(domain, "That's a nope on the ", rec_type, " record there, bud.")   ## hilarious.
 		if len(sys.argv) > 3:
 			try:
-				result2 = dns.resolver.query(domain, rec_type2)
+				result2 = dns.resolver.resolve(domain, rec_type2)
 				for answer2 in result2:
-					print("\t" + answer2.to_text())
+					print(domain + "\t" + answer2.to_text())
 			except:
 				pass
-				print("that's a nope on the " + rec_type2 + " record there, bud.")
+				print(domain + "that's a nope on the " + rec_type2 + " record there, bud.")
 ## if no DNS arguments in place it just prints the domains.
 else:
 	for domain in domain_match:
